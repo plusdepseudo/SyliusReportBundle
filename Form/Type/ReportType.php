@@ -11,13 +11,17 @@
 
 namespace Sylius\Bundle\ReportBundle\Form\Type;
 
+use AppBundle\Form\DataFetcher\DataFetcherChoiceType;
 use Sylius\Bundle\ReportBundle\Form\EventListener\BuildReportDataFetcherFormSubscriber;
 use Sylius\Bundle\ReportBundle\Form\EventListener\BuildReportRendererFormSubscriber;
+use Sylius\Bundle\ReportBundle\Form\Type\Renderer\RendererChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\EventSubscriber\AddCodeFormSubscriber;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Sylius\Component\Report\DataFetcher\DataFetcherInterface;
 use Sylius\Component\Report\Renderer\RendererInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -63,18 +67,18 @@ class ReportType extends AbstractResourceType
             ->addEventSubscriber(new AddCodeFormSubscriber())
             ->addEventSubscriber(new BuildReportDataFetcherFormSubscriber($this->dataFetcherRegistry, $builder->getFormFactory()))
             ->addEventSubscriber(new BuildReportRendererFormSubscriber($this->rendererRegistry, $builder->getFormFactory()))
-            ->add('name', 'text', [
+            ->add('name', TextType::class, [
                 'label' => 'sylius.form.report.name',
                 'required' => true,
             ])
-            ->add('description', 'textarea', [
+            ->add('description', TextareaType::class, [
                 'label' => 'sylius.form.report.description',
                 'required' => false,
             ])
-            ->add('dataFetcher', 'sylius_data_fetcher_choice', [
+            ->add('dataFetcher', DataFetcherChoiceType::class, [
                 'label' => 'sylius.form.report.data_fetcher',
             ])
-            ->add('renderer', 'sylius_renderer_choice', [
+            ->add('renderer', RendererChoiceType::class, [
                 'label' => 'sylius.form.report.renderer.label',
             ])
         ;
@@ -86,7 +90,8 @@ class ReportType extends AbstractResourceType
 
         /** @var RendererInterface $renderer */
         foreach ($this->rendererRegistry->all() as $type => $renderer) {
-            $formType = $renderer->getType();
+            //$formType = $renderer->getType();
+            $formType = $renderer->getFormType();
 
             if (!$formType) {
                 continue;
@@ -99,9 +104,11 @@ class ReportType extends AbstractResourceType
             }
         }
 
+
         /** @var DataFetcherInterface $dataFetcher */
         foreach ($this->dataFetcherRegistry->all() as $type => $dataFetcher) {
-            $formType = $dataFetcher->getType();
+            //$formType = $dataFetcher->getType();
+            $formType = $dataFetcher->getFormType();
 
             if (!$formType) {
                 continue;
@@ -134,7 +141,7 @@ class ReportType extends AbstractResourceType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'sylius_report';
     }

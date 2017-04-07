@@ -35,17 +35,24 @@ class ReportController extends ResourceController
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);
 
+        /** @var ReportInterface $report */
         $report = $this->findOr404($configuration);
 
-        $formType = $report->getDataFetcher();
+        //$formType = $report->getDataFetcher();
+        $dataFetcherCode = $report->getDataFetcher();
+        $dataFetcherRegistry = $this->get('sylius.registry.report.data_fetcher');
+        $dataFetcher = $dataFetcherRegistry->get($dataFetcherCode);
+        $formType = $dataFetcher->getFormType();
+
         $configurationForm = $this->container->get('form.factory')->createNamed(
             'configuration',
             $formType,
-            $report->getDataFetcherConfiguration()
+            $report->getDataFetcherConfiguration(),
+            ['csrf_protection' => false]
         );
 
         if ($request->query->has('configuration')) {
-            $configurationForm->submit($request);
+            $configurationForm->submit($request->query->get('configuration'));
         }
 
         return $this->container->get('templating')->renderResponse($configuration->getTemplate('show.html'), [

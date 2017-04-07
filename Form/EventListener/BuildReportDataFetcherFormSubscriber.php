@@ -93,14 +93,15 @@ class BuildReportDataFetcherFormSubscriber implements EventSubscriberInterface
     {
         /** @var DataFetcherInterface $dataFetcher */
         $dataFetcher = $this->dataFetcherRegistry->get($dataFetcherType);
-        $formType = $dataFetcher->getType();
+        //$formType = $dataFetcher->getType();
+        $formType = $dataFetcher->getFormType();
 
         try {
             $configurationField = $this->factory->createNamed(
                 'dataFetcherConfiguration',
                 $formType,
                 $config,
-                ['auto_initialize' => false]
+                ['auto_initialize' => false, 'csrf_protection' => false]
             );
         } catch (\InvalidArgumentException $e) {
             return;

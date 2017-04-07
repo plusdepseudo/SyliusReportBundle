@@ -62,11 +62,13 @@
 
         <service id="sylius.form.type.renderer.chart" class="%sylius.form.type.renderer.chart.class%">
             <argument type="service" id="templating" />
+            <argument>%sylius.form.type.report.renderer.chart_configuration.class%</argument>
             <tag name="sylius.report.renderer" renderer="sylius_renderer_chart" label="Chart renderer" />
         </service>
 
         <service id="sylius.form.type.renderer.table" class="%sylius.form.type.renderer.table.class%">
             <argument type="service" id="templating" />
+            <argument>%sylius.form.type.report.renderer.table_configuration.class%</argument>
             <tag name="sylius.report.renderer" renderer="sylius_renderer_table" label="Table renderer" />
         </service>
 

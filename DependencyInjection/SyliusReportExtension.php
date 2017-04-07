@@ -16,6 +16,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\DependencyInjection\Definition;
 
 /**
  * Report extension.
@@ -40,6 +41,10 @@ class SyliusReportExtension extends AbstractResourceExtension
 
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
+        }
+
+        if(!$container->hasDefinition('sylius.form.type.report')) {
+            $container->setDefinition('sylius.form.type.report', new Definition(ReportType::class));
         }
 
         $container

@@ -34,13 +34,15 @@ class ChartRenderer implements RendererInterface
      * @var EngineInterface
      */
     private $templating;
+    private $formType;
 
     /**
      * @param EngineInterface $templating
      */
-    public function __construct(EngineInterface $templating)
+    public function __construct(EngineInterface $templating, $formType)
     {
         $this->templating = $templating;
+        $this->formType = $formType;
     }
 
     /**
@@ -89,5 +91,10 @@ class ChartRenderer implements RendererInterface
             self::PIE_CHART => 'Pie chart',
             self::DOUGHNUT_CHART => 'Doughnut chart',
         ];
+    }
+
+    public function getFormType()
+    {
+        return $this->formType;
     }
 }

@@ -27,13 +27,15 @@ class TableRenderer implements RendererInterface
      * @var EngineInterface
      */
     private $templating;
+    private $formType;
 
     /**
      * @param EngineInterface $templating
      */
-    public function __construct(EngineInterface $templating)
+    public function __construct(EngineInterface $templating, $formType)
     {
         $this->templating = $templating;
+        $this->formType = $formType;
     }
 
     /**
@@ -68,5 +70,10 @@ class TableRenderer implements RendererInterface
     public function getType()
     {
         return DefaultRenderers::TABLE;
+    }
+
+    public function getFormType()
+    {
+        return $this->formType;
     }
 }

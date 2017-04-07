@@ -43,7 +43,9 @@ class RegisterDataFetcherPass implements CompilerPassInterface
             }
 
             $name = $attributes[0]['fetcher'];
-            $dataFetchers[$name] = $attributes[0]['label'];
+            $label = $attributes[0]['label'];
+            //$dataFetchers[$name] = $attributes[0]['label'];
+            $dataFetchers[$label] = $name;
 
             $registry->addMethodCall('register', [$name, new Reference($id)]);
         }

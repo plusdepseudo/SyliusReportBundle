@@ -90,14 +90,16 @@ class BuildReportRendererFormSubscriber implements EventSubscriberInterface
     {
         /** @var RendererInterface $renderer */
         $renderer = $this->rendererRegistry->get($rendererType);
-        $formType = $renderer->getType();
+        //$formType = $renderer->getType();
+        $formType = $renderer->getFormType();
+
 
         try {
             $configurationField = $this->factory->createNamed(
                 'rendererConfiguration',
                 $formType,
                 $data,
-                ['auto_initialize' => false]
+                ['auto_initialize' => false, 'csrf_protection' => false]
             );
         } catch (\InvalidArgumentException $e) {
             return;
