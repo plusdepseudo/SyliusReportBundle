@@ -43,6 +43,8 @@
 
                     if (replace || !container.html().trim()) {
                         container.html(settings.prototypeElementPrefix + prototypeElement.data('prototype'));
+                        container.effect("highlight", {}, 1500);
+                        $('.ui.dropdown').dropdown('refresh');
                     }
                 }
             });
