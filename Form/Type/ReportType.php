@@ -11,7 +11,7 @@
 
 namespace Sylius\Bundle\ReportBundle\Form\Type;
 
-use AppBundle\Form\DataFetcher\DataFetcherChoiceType;
+use Sylius\Bundle\ReportBundle\Form\Type\DataFetcher\DataFetcherChoiceType;
 use Sylius\Bundle\ReportBundle\Form\EventListener\BuildReportDataFetcherFormSubscriber;
 use Sylius\Bundle\ReportBundle\Form\EventListener\BuildReportRendererFormSubscriber;
 use Sylius\Bundle\ReportBundle\Form\Type\Renderer\RendererChoiceType;
