@@ -4,8 +4,7 @@
 
 {% if values|length > 0 %}
         <table id="results" class="ui sortable stackable celled table"
-               {#{% if values|first is iterable %}style="display: block; overflow-x: auto;"{% endif %}>#}
-               {% if values|first is iterable %}style="overflow-x: auto;"{% endif %}>
+               {% if values|first is iterable %}style="display: block; overflow-x: auto;"{% endif %}>
         <thead>
             <tr>
                 <th></th>
