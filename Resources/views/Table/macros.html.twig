@@ -3,12 +3,14 @@
 {% import 'SyliusResourceBundle:Macros:buttons.html.twig' as buttons %}
 
 {% if values|length > 0 %}
-    <table id="results" class="table table-bordered table-condensed">
+        <table id="results" class="ui sortable stackable celled table"
+               {#{% if values|first is iterable %}style="display: block; overflow-x: auto;"{% endif %}>#}
+               {% if values|first is iterable %}style="overflow-x: auto;"{% endif %}>
         <thead>
             <tr>
-                <th>{{ sylius_resource_sort('id', '#') }}</th>
+                <th></th>
                 {% for label in labels %}
-                    <th>{{ sylius_resource_sort('label', label) }}</th>
+                    <th>{{ label }}</th>
                 {% endfor %}
             </tr>
         </thead>
@@ -16,8 +18,14 @@
             {% for key,value in values %}
                 <tr id="{{ loop.index }}">
                     <td>{{ loop.index }}</td>
+                    {% if value is iterable %}
+                        {% for item in value %}
+                            <td>{{ item }}</td>
+                        {% endfor %}
+                    {% else %}
                     <td>{{ key }}</td>
                     <td>{{ value }}</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
@@ -25,5 +33,4 @@
 {% else %}
     <span>{{ 'sylius.ui.there_are_no_reports_created'|trans }}</span>
 {% endif %}
-
 {% endmacro %}
